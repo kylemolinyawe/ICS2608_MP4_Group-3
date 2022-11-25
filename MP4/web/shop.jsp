@@ -23,14 +23,15 @@ Have each item displayed read from a item object file
               $("#nav-placeholder").load("nav.jsp");
             });
         </script>
-        <section class="listings"> <!-- Java scriptlet for generating each item article -->
-                <%
+        <main>
+            <section class="listings"> <!-- Java scriptlet for generating each item article -->
+            <%
                 String displayName = "John Doe";
                 String datePublished = "17 hours ago";
                 String imgFilePath = "https://cdn.discordapp.com/attachments/751354918782238770/1038410899368710224/image.png";
                 String itemName = "NUOWA M6 Smart Fashion Sports Women Watch";
                 int itemPrice = 2499;
-                
+
                 for(int i = 1; i<=8; i++)
                 {
                     out.print("<article class=item>");
@@ -45,7 +46,8 @@ Have each item displayed read from a item object file
                     out.println("</a>");
                     out.print("</article>");
                 }
-                %>                  
+            %>                  
             </section>
+        </main>
     </body>
 </html>
