@@ -1,6 +1,5 @@
-package Model;
+/* Represents vailable item for sale on the website */
 
-/* Holds the pertinent information of each listing on the website */
 import java.io.*;
 import java.util.List;
 import java.util.Scanner;

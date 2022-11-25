@@ -1,8 +1,5 @@
+/* Represents a user on the website */
 
-/**
- *
- * @author Kyle Molinyawe
- */
 public class User {
     private int id;
     private String email;
