@@ -21,7 +21,7 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-    List<User> users = readCSV(this.getServletContext());
+    List<User> users = readUsersFile(this.getServletContext());
     String username = request.getParameter("username");
     String password = request.getParameter("password");
 
@@ -36,31 +36,21 @@ public class LoginServlet extends HttpServlet {
        
     }
 
-//Reads the usercredentials.txt and stores the values in a list of user objects
-    protected List<User> readCSV(ServletContext servletContext){
+    //Reads the users.txt and stores the values in a list of user objects
+    protected List<User> readUsersFile(ServletContext servletContext){
  
         List<User> list = new ArrayList<>();
         try   {  
 
         InputStream ins = servletContext.getResourceAsStream("/users.txt");
- InputStreamReader isr = new InputStreamReader(ins);
+        InputStreamReader isr = new InputStreamReader(ins);
                 BufferedReader reader = new BufferedReader(isr);
                 int n = 0;
                 String line = "";
                 while ((line = reader.readLine()) != null) {
                     String[] byComma = line.split(",");
-list.add(new User(Integer.parseInt(byComma[0]), byComma[1], byComma[2], byComma[3]));
+                    list.add(new User(Integer.parseInt(byComma[0]), byComma[1], byComma[2], byComma[3]));
                 }
-/*
-        Scanner s = new Scanner(inputStream).useDelimiter("\n");
-        while(s.hasNext()){
-            String result = s.next();
-            String[] byComma = result.split(",");
-            list.add(new User(Integer.parseInt(byComma[0]), byComma[1], byComma[2], byComma[3]));
-        }
-
-inputStream.close();
-*/
         }catch (IOException e){  
             e.printStackTrace();  
         }
@@ -68,26 +58,27 @@ inputStream.close();
         return list;
     }
 
-// iterates through a list and returns a boolean value if a match is found between the response and list
-protected boolean validateUsername(List<User> users, String requestUsername){
-    ListIterator<User> usersIterator = users.listIterator();
-    while(usersIterator.hasNext()){
-        if (usersIterator.next().getUsername().equals(requestUsername)){
-            return true;
-        } 
+    // iterates through a list and returns a boolean value if a match is found between the response and list
+    protected boolean validateUsername(List<User> users, String requestUsername){
+        ListIterator<User> usersIterator = users.listIterator();
+        while(usersIterator.hasNext()){
+            if (usersIterator.next().getUsername().equals(requestUsername)){
+                return true;
+            } 
+        }
+        return false;
     }
-    return false;
-}
-
-protected boolean validatePassword(List<User> users, String requestPassword){
-    ListIterator<User> usersIterator = users.listIterator();
-    while(usersIterator.hasNext()){
-        if (usersIterator.next().getPassword().equals(requestPassword)){
-            return true;
-        } 
+    
+    // same structure as validateUsername except for password
+    protected boolean validatePassword(List<User> users, String requestPassword){
+        ListIterator<User> usersIterator = users.listIterator();
+        while(usersIterator.hasNext()){
+            if (usersIterator.next().getPassword().equals(requestPassword)){
+                return true;
+            } 
+        }
+        return false;
     }
-    return false;
-}
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
