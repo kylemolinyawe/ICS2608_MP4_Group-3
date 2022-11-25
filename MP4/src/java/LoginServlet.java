@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
     String password = request.getParameter("password");
 
     if(validateUsername(users, username) && validatePassword(users, password)){ // successful login
-            RequestDispatcher rd = request.getRequestDispatcher("shop.jsp");  
+            RequestDispatcher rd = request.getRequestDispatcher("success.jsp");  
             rd.forward(request, response);
     }else{ // failed login
     RequestDispatcher rd = request.getRequestDispatcher("failed.jsp");  
