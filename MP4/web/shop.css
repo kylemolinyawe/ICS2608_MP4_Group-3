@@ -54,8 +54,13 @@ img{
 
 .price{
     margin-top: -5px;
+    margin-bottom: 0px;
     font-size: 18px;
     font-weight: bold;
+}
+
+.description{
+    margin-top: 0px;
 }
 
 .frame{
