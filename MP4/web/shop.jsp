@@ -38,7 +38,7 @@ Have each item displayed read from a item object file
                     String imgURL = product.getImgURL();
                     double productPrice = product.getPrice();
                     String productDescription = product.getDescription();
-                    
+
                     out.print("<article class=item>");
                     out.print("<a href=item.jsp>");
                     out.print("<div class=frame>");
@@ -48,6 +48,7 @@ Have each item displayed read from a item object file
                     out.print("<p class=price>PHP" + productPrice + "</p>");
                     out.print("</a>");
                     out.print("<p class=description>" + productDescription + "</p>");
+                    out.println("</a>");
                     out.print("</article>");                  
                 }
                                                 
