@@ -1,3 +1,5 @@
+package Model;
+
 /* Represents a user on the website */
 
 public class User {
