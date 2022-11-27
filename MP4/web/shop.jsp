@@ -7,7 +7,6 @@ Have each item displayed read from a item object file
 --%>
 
 <%@page import="java.util.ArrayList"%>
-<%@page import="java.util.TreeSet"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="Model.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
