@@ -1,5 +1,8 @@
+package Controller;
 
 
+
+import Model.User;
 import java.io.*;
 import java.util.*;
 import javax.servlet.RequestDispatcher;
@@ -11,6 +14,7 @@ import javax.servlet.ServletContext;
 
 /**
  * Login controller servlet which validates the user's credentials when trying to login.
+ * And forwards them to the appropriate pages.
 * 
  * @author Kyle Molinyawe
  */
@@ -20,20 +24,27 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-    List<User> users = readUsersFile(this.getServletContext());
-    String username = request.getParameter("username");
-    String password = request.getParameter("password");
-
-    if(validateUsername(users, username) && validatePassword(users, password)){ // successful login
-            RequestDispatcher rd = request.getRequestDispatcher("shop.jsp");  
+        
+        // building collection of user objects from the file users.txt
+        // TODO: remember why its necessary to add a ServletContext parameter to the file read method
+        List<User> users = readUsersFile(this.getServletContext());
+        
+        // get form data from client
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        
+        // successful login
+        // TODO: redirect to ShopServlet first
+        if(validateUsername(users, username) && validatePassword(users, password)){
+            RequestDispatcher rd = request.getRequestDispatcher("/ShopServlet");  
             rd.forward(request, response);
-    }else{ // failed login
-    RequestDispatcher rd = request.getRequestDispatcher("failed.jsp");  
+        }    
+        // failed login
+        else{ 
+            RequestDispatcher rd = request.getRequestDispatcher("failed.jsp");  
             rd.forward(request, response);
-    }
+        }
 
-       
     }
 
     //Reads the users.txt and stores the values in a list of user objects
@@ -42,10 +53,9 @@ public class LoginServlet extends HttpServlet {
         List<User> list = new ArrayList<>();
         try   {  
 
-        InputStream ins = servletContext.getResourceAsStream("/users.txt");
+        InputStream ins = servletContext.getResourceAsStream("/files/users.txt");
         InputStreamReader isr = new InputStreamReader(ins);
                 BufferedReader reader = new BufferedReader(isr);
-                int n = 0;
                 String line = "";
                 while ((line = reader.readLine()) != null) {
                     String[] byComma = line.split(",");

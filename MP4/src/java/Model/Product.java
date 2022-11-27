@@ -1,17 +1,20 @@
+package Model;
+
 /* Represents vailable item for sale on the website */
 
 import java.io.*;
 import java.util.List;
 import java.util.Scanner;
 
-public class Item {
+public class Product {
     private int id;
     private String name;
     private double price;
     private String imgURL;
     private String description;
 
-    public Item(String name, double price, String imgURL, String description){
+    public Product(int id, String name, double price, String imgURL, String description){
+        this.id = id;
         this.name = name;
         this.price = price;
         this.imgURL = imgURL;
@@ -44,6 +47,10 @@ public class Item {
 
     public void setDescription(String description){
         this.name = description;
+    }
+    
+    public String getImgURL(){
+        return this.imgURL;
     }
 
 }
