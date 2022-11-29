@@ -20,7 +20,7 @@ import javax.servlet.ServletContext;
  */
 public class LoginServlet extends HttpServlet {
 
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -34,9 +34,8 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         
         // successful login
-        // TODO: redirect to ShopServlet first
         if(validateUsername(users, username) && validatePassword(users, password)){
-            RequestDispatcher rd = request.getRequestDispatcher("/ShopServlet");  
+            RequestDispatcher rd = request.getRequestDispatcher("ShopServlet");  
             rd.forward(request, response);
         }    
         // failed login

@@ -1,28 +1,26 @@
-package Controller;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
+package Controller;
+
 import Model.Product;
 import java.io.*;
 import java.util.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletContext;
 
 /**
- *
+ * 
  * @author Kyle Molinyawe
  */
-@WebServlet(urlPatterns = {"/ShopServlet"})
+
 public class ShopServlet extends HttpServlet {
 
     /**
@@ -42,7 +40,7 @@ public class ShopServlet extends HttpServlet {
     
     protected List<Product> readProductsFile(ServletContext servletContext){
  
-        List<Product> list = new ArrayList<>();
+        List<Product> list = new ArrayList<Product>();
         try{  
             InputStream ins = servletContext.getResourceAsStream("/files/products.csv");
             InputStreamReader isr = new InputStreamReader(ins);
@@ -64,31 +62,11 @@ public class ShopServlet extends HttpServlet {
         return list;
     }
     
-    // reads the categories.csv file and returns a list in the order its encoded in the file.
-    protected List<String> readCategoriesFile(ServletContext servletContext){
-        
-        List<String> list = new ArrayList<>();
-        try{  
-            InputStream ins = servletContext.getResourceAsStream("/files/categories.csv");
-            InputStreamReader isr = new InputStreamReader(ins);
-            BufferedReader reader = new BufferedReader(isr);
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                String[] byComma = line.split(",");
-                list.add(byComma[0]);
-            }
-        }catch (IOException e){  
-            e.printStackTrace();  
-        }
-        
-        return list;
-    }
-    
     // given a string representing a category adds products from an input list 
     // into a new list whose with each element's category corresponding
     // with the input and outputs this a list of those products
     protected List<Product> sortByCategory(String category, List<Product> products){
-        List<Product> list = new ArrayList();
+        List<Product> list = new ArrayList<Product>();
             
             for(int i = 0; i < products.size(); i++){
                 if(products.get(i).getCategory().matches(category)){
@@ -112,17 +90,22 @@ public class ShopServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
         
         String category = request.getParameter("category");
-        
+               
         List<Product> products = readProductsFile(this.getServletContext());
-        List<String> categories = readCategoriesFile(this.getServletContext());       
         
+        if(category.matches("All")){
+            request.setAttribute("products", products);
+            RequestDispatcher rd = request.getRequestDispatcher("shop.jsp");  
+            rd.forward(request, response);
+            return;
+        }
+  
         List<Product> sortedProducts = sortByCategory(category, products);
         
         request.setAttribute("products", sortedProducts);
-        request.setAttribute("categories", categories);
         
         RequestDispatcher rd = request.getRequestDispatcher("shop.jsp");  
         rd.forward(request, response);
@@ -140,14 +123,12 @@ public class ShopServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) // working fine
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
         
         List<Product> products = readProductsFile(this.getServletContext());
-        List<String> categories = readCategoriesFile(this.getServletContext());
         
-        // bind items collection to request cycle
+        // bind collection to request
         request.setAttribute("products", products);
-        request.setAttribute("categories", categories);
             
         RequestDispatcher rd = request.getRequestDispatcher("shop.jsp");  
         rd.forward(request, response);

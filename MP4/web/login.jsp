@@ -20,7 +20,7 @@ Display incorrect credentials when login fails
                 <input type ="text" name="username" id="username" placeholder="USERNAME" required>
                 <input type ="text" name="password" id="password" placeholder="PASSWORD" required>
                 <input type="submit" value="LOG IN">
-                <p>New to Website? Proceed as <a href="shop.jsp">Guest</a></p>
+                <p>New to Website? Proceed as <a href="ShopServlet?category=All">Guest</a></p>
             </form>
         </div>
     </body>
