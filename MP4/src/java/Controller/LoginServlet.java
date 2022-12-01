@@ -6,11 +6,8 @@ import Model.User;
 import java.io.*;
 import java.util.*;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletContext;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
 /**
  * Login controller servlet which validates the user's credentials when trying to login.
@@ -36,8 +33,14 @@ public class LoginServlet extends HttpServlet {
         // successful login
         if(validateUsername(users, username) && validatePassword(users, password)){
             RequestDispatcher rd = request.getRequestDispatcher("ShopServlet");  
+            
+            // create a session whose name is the username of the customer
+            HttpSession session = request.getSession();
+            session.setAttribute("name", username);
+            
             rd.forward(request, response);
         }    
+        
         // failed login
         else{ 
             RequestDispatcher rd = request.getRequestDispatcher("failed.jsp");  

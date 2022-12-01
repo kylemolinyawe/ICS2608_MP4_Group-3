@@ -1,41 +1,24 @@
-:root{
-    --page-padding-right: 150px;
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
 }
 
-nav{
-    font-family: sans-serif;
+li {
+  float: left;
 }
 
-nav ul{
-    list-style-type: none;
-    overflow: hidden;
-    padding: 0;
-    margin: 0;
-    border-color: grey;
-    border-style: solid;
-    border-width: 1px;
-    border-top-width: 0px;
-    width: 100%;
-    position: fixed;
-    background-color: white;
-    z-index: 2;
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
 }
 
-nav li{
-    float: right;
-}
-
-nav li a{
-    display: block;
-    padding: 12px 16px;
-    text-decoration: none;
-    font-size: 14px;
-    color: black;
-    font-weight: normal;
-    background-color: lightgrey;
-    margin: 0px;
-}
-
-.sell{
-    margin-right: 170px;
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
 }

@@ -22,7 +22,7 @@ Have each item displayed read from a item object file
             <jsp:include page="includes/nav.jsp" />
         </script>
         <main class="shop"> 
-            
+            <!--This is a comment--> 
              <!-- Product categories-->
             <div class="categories">
                 <ul>                                
@@ -49,26 +49,27 @@ Have each item displayed read from a item object file
                     for(int i = 0; i<products.size(); i++){
                     
                         Product product = products.get(i);
-
+                            
                         String productName = product.getName();
                         String imgURL = product.getImgURL();
                         double productPrice = product.getPrice();
                         String productDescription = product.getDescription();
                         String productCategory = product.getCategory();
-
-                        out.print("<article class=item>");
-                        out.print("<a href=item.jsp>");
-                        out.print("<div class=frame>");
-                        out.print("<img src=" + imgURL + ">");
-                        out.print("</div>");
-                        out.print("<p class=name>" + productName + "</p>");
-                        out.print("<p class=price>PHP" + productPrice + "</p>");
-                        out.print("</a>");
-                        out.print("<p class=description>" + productDescription + "</p>");
-                        out.print("<p class=category>" + productCategory + "</p>");
-                        out.println("</a>");
-                        out.print("</article>");     
                         
+                %>                
+                        <article class=item>
+                            <a href=item.jsp>
+                                <div class=frame>
+                                    <img src="<%= imgURL %>">
+                                </div>
+                                    <p class=name><%= productName %></p>
+                                    <p class=price>PHP <%= productPrice %></p>
+                            
+                                <p class=description><%= productDescription %></p>
+                                <p class=category><%= productCategory %></p>
+                            </a>
+                        </article>     
+                <%        
                     }                                              
                 %>                  
             </section>
