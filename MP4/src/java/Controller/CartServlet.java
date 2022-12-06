@@ -22,14 +22,29 @@ public class CartServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        buy(request, response);
+        String id = request.getParameter("id");
+        String submit=request.getParameter("submit");
+        //Only adds an item to cart without going to the cart page
+        if(id!=null&&Integer.parseInt(id)>0 && Integer.parseInt(id)<15)
+        {
+             add(request, response);
+             response.sendRedirect("ProductServlet?id="+id);
+        }
+        //user is checking out their cart
+        else if(request.getSession().getAttribute("cart")!=null&&!(submit==null))
+        {
+               buy(request,response);
+        }
+        else
+        {
+            response.sendRedirect("cart.jsp");
+        }
+       
         
     }
-    
-    protected void buy(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        
-        List<Product> products = Product.readProductsFile(this.getServletContext());
+    protected void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+                List<Product> products = Product.readProductsFile(this.getServletContext());
         
         HttpSession session = request.getSession();
                   
@@ -55,7 +70,7 @@ public class CartServlet extends HttpServlet {
             if(Product.exists(Integer.parseInt(request.getParameter("id")), (ArrayList<Product>)cart)){
                 
                 int index = Product.searchProduct(Integer.parseInt(request.getParameter("id")), products);
-
+                
                 Product product = cart.get(index);
                 int currentQuantity = product.getQuantity();
                 
@@ -77,10 +92,10 @@ public class CartServlet extends HttpServlet {
                 session.setAttribute("cart", cart);
             }
         }                 
+    }
+    protected void buy(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
         
-        RequestDispatcher rd = request.getRequestDispatcher("cart.jsp");
-        rd.forward(request, response);
-               
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
