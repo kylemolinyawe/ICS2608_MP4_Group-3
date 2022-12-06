@@ -3,6 +3,11 @@
 <%@page import="java.util.Iterator"%>
 <%@page import="Model.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<% if(session.getAttribute("cart")==null)
+{
+    response.sendRedirect("ShopServlet?category=All");
+    return;
+}%>
 <!DOCTYPE html>
 <html class="h-100">
     <head>
