@@ -1,54 +1,44 @@
 
 package Controller;
 
+import Model.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Kyle Molinyawe
  */
-public class LogoutServlet extends HttpServlet {
+public class ProductServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    
-    // Servlet that destroys the current session and forwards to logoout
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+             
+        // get id appended in url and build products list
+        int searchId = Integer.parseInt(request.getParameter("id"));
+        List<Product> products = Product.readProductsFile(this.getServletContext());      
         
-        // Destroy session
-        HttpSession session = request.getSession();
-        session.invalidate();
+        // search a product, returns an int representing the index
+        int index = Product.searchProduct(searchId, products);
         
-        // Forward to logout
-        RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+        // setAttribute index returned by Product.searchProduct amd products list
+        request.setAttribute("index", index);
+        request.setAttribute("products", products);
+        
+        
+        RequestDispatcher rd = request.getRequestDispatcher("product.jsp");
         rd.forward(request, response);
+        
     }
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -69,11 +59,6 @@ public class LogoutServlet extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

@@ -24,14 +24,14 @@ public class LoginServlet extends HttpServlet {
         
         // building collection of user objects from the file users.txt
         // TODO: remember why its necessary to add a ServletContext parameter to the file read method
-        List<User> users = readUsersFile(this.getServletContext());
+        List<User> users = User.readUsersFile(this.getServletContext());
         
         // get form data from client
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         
         // successful login
-        if(validateUsername(users, username) && validatePassword(users, password)){
+        if(User.validateUsername(users, username) && User.validatePassword(users, password)){
             RequestDispatcher rd = request.getRequestDispatcher("ShopServlet");  
             
             // create a session whose name is the username of the customer
@@ -47,49 +47,6 @@ public class LoginServlet extends HttpServlet {
             rd.forward(request, response);
         }
 
-    }
-
-    //Reads the users.txt and stores the values in a list of user objects
-    protected List<User> readUsersFile(ServletContext servletContext){
- 
-        List<User> list = new ArrayList<>();
-        try   {  
-
-        InputStream ins = servletContext.getResourceAsStream("/files/users.txt");
-        InputStreamReader isr = new InputStreamReader(ins);
-                BufferedReader reader = new BufferedReader(isr);
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    String[] byComma = line.split(",");
-                    list.add(new User(Integer.parseInt(byComma[0]), byComma[1], byComma[2], byComma[3]));
-                }
-        }catch (IOException e){  
-            e.printStackTrace();  
-        }
-
-        return list;
-    }
-
-    // iterates through a list and returns a boolean value if a match is found between the response and list
-    protected boolean validateUsername(List<User> users, String requestUsername){
-        ListIterator<User> usersIterator = users.listIterator();
-        while(usersIterator.hasNext()){
-            if (usersIterator.next().getUsername().equals(requestUsername)){
-                return true;
-            } 
-        }
-        return false;
-    }
-    
-    // same structure as validateUsername except for password
-    protected boolean validatePassword(List<User> users, String requestPassword){
-        ListIterator<User> usersIterator = users.listIterator();
-        while(usersIterator.hasNext()){
-            if (usersIterator.next().getPassword().equals(requestPassword)){
-                return true;
-            } 
-        }
-        return false;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
