@@ -78,10 +78,7 @@
                             Double productPrice = cart.get(i).getPrice();
                             int productQuantity = cart.get(i).getQuantity();              
                             int productId = cart.get(i).getId();
-                            double basePrice = cart.get(i).getBasePrice();
-                            
-                            
-
+                            double basePrice = cart.get(i).getBasePrice();                                                      
                     %>                   
                     <!-- row in the products list -->
                     <div class="row mb-3">

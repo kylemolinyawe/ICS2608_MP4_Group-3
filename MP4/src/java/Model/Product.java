@@ -158,4 +158,16 @@ public class Product {
         this.price = this.quantity * this.basePrice;
     }
     
+    public void incrementQuantity(){
+        this.quantity++;
+    }
+    
+    public void decrementQuantity(){
+        this.quantity--;
+    }
+    
+    public boolean isQuantityZero(){
+        return this.quantity == 0;
+    }
+    
 }

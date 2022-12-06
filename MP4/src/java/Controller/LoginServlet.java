@@ -2,6 +2,7 @@ package Controller;
 
 
 
+import Model.Product;
 import Model.User;
 import java.io.*;
 import java.util.*;
@@ -37,6 +38,10 @@ public class LoginServlet extends HttpServlet {
             // create a session whose name is the username of the customer
             HttpSession session = request.getSession();
             session.setAttribute("name", username);
+            
+            // user's cart
+            ArrayList<Product> cart = new ArrayList<Product>();
+            session.setAttribute("cart", cart);
             
             rd.forward(request, response);
         }    
