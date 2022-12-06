@@ -31,7 +31,7 @@ public class CartServlet extends HttpServlet {
              response.sendRedirect("ProductServlet?id="+id);
         }
         //if user is already in the cart page and is checking out their cart
-        else if(request.getSession().getAttribute("cart")!=null&&!(submit==null))
+        else if(request.getSession().getAttribute("buy")!=null&&!(submit==null))
         {
                buy(request,response);
         }
@@ -94,8 +94,16 @@ public class CartServlet extends HttpServlet {
         }                 
     }
     protected void buy(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+        throws ServletException, IOException 
+    {
         //To add: check out cart and display results in a separate jsp file
+        Double TotalPrice = 0.0;
+        HttpSession session = request.getSession();
+        List<Product> productList = (ArrayList<Product>)session.getAttribute("cart");
+        for(Product p: productList)
+        {
+            TotalPrice += p.getPrice();
+        }
         
     }
 
