@@ -26,7 +26,7 @@ public class CartServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String operation = request.getParameter("operation");
         
-        
+        // case for adding cart products from the product.jsp page
         if(operation == null){
             addToCart(request, response, session);
             
@@ -34,7 +34,7 @@ public class CartServlet extends HttpServlet {
             rd.forward(request, response);
         }
         
-        
+        // case for removing a product, incrementing decrementing quantity, from the cart page
         else{
             int productId = Integer.parseInt(request.getParameter("id"));  
             ArrayList<Product> cart = (ArrayList<Product>)session.getAttribute("cart");
@@ -42,6 +42,8 @@ public class CartServlet extends HttpServlet {
             int index;
             RequestDispatcher rd = request.getRequestDispatcher("cart.jsp");
             
+            // evaluates the operation string and either increment or decrements the quantity
+            // or remove the product entirely from the cart
             switch(operation){
                 case "increment":
                     
@@ -56,18 +58,19 @@ public class CartServlet extends HttpServlet {
                     rd.forward(request, response);
                     
                     break;
-                    
+                
                 case "decrement":
                     
                     index = Product.searchProduct(productId, cart);
                     cart.get(index).decrementQuantity();
                     
+                    // case for decrementing and removing the final product
                     if(cart.get(index).isQuantityZero()){
                         
                         cart.remove(index);
                         
                         rd.forward(request, response);
-                                             
+                                           
                     } else{
                         
                         if(cart.isEmpty()){
@@ -92,6 +95,7 @@ public class CartServlet extends HttpServlet {
                     index = Product.searchProduct(productId, cart);
                     cart.remove(index);
                     
+                    // case for removing the final product
                     if(cart.isEmpty()){
                         
                         rd.forward(request, response);
@@ -109,12 +113,8 @@ public class CartServlet extends HttpServlet {
             }
             
         }
-        
 
-        /* not working for me - molinyawe
-        response.sendRedirect("CartServlet?id="+id);
-       */
-             
+        
     }
     
     protected double getTotal(ArrayList<Product>cart){
@@ -134,6 +134,7 @@ public class CartServlet extends HttpServlet {
         List<Product> products = Product.readProductsFile(this.getServletContext());
         ArrayList<Product> cart = (ArrayList<Product>)session.getAttribute("cart");
         
+        // case for adding a duplicate product
         if(Product.exists(Integer.parseInt(request.getParameter("id")), (ArrayList<Product>)cart)){
 
             int index = Product.searchProduct(Integer.parseInt(request.getParameter("id")), products);
@@ -164,8 +165,7 @@ public class CartServlet extends HttpServlet {
             
     }
         
-        
-                                                                                 
+    
     protected void buy(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException 
     {
