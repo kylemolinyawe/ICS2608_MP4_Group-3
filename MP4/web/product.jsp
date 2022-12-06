@@ -67,9 +67,12 @@ Has ‘Qty.’ buttons and an ‘Add to Cart’ button
                         <h2><%= productName %></h2>
                         <h4>PHP <%= productPrice %></h4>
                         
-                        <a href="CartServlet?id=<%=productId%>">
-                            <button class="btn btn-primary">Add to Cart</button>
-                        </a>
+                        <!-- hidden form field -->
+                       <form action="CartServlet" method="post">
+                            <input type="hidden" name="id" value="<%=productId%>">
+                            <input type="submit" class="btn btn-primary" value="Add to Cart">
+                        </form>
+                            
                         <p><%= productDescription %>e</p>
                     </div>
                     

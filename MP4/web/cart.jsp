@@ -24,7 +24,7 @@
                 <div class="container-fluid w-75 ps-3 pe-3">
                     <ul class="nav nav-pills">  
                         <li class="nav-item">
-                            <a class="nav-link link-dark" href="ShopServlet?category=All">< Back</a>
+                            <a class="nav-link link-dark" href="ShopServlet?category=All">< Continue Ordering</a>
                         </li>
                     </ul>
                 </div>
@@ -44,7 +44,7 @@
                     <!-- header row -->
                     <div class="row">
                         <!-- product column -->
-                        <div class="col-sm-8">
+                        <div class="col-sm-7">
                             <label>PRODUCT</label>
                         </div>
 
@@ -55,7 +55,7 @@
 
                         <!-- price/total column -->
                         <!-- TODO: align right -->
-                        <div class="col-sm-1">
+                        <div class="col-sm-2" style="text-align: right;">
                             <label>TOTAL</label>
                         </div>
                     </div>  
@@ -63,38 +63,123 @@
                     
                     <%
                         ArrayList<Product> cart = (ArrayList<Product>)session.getAttribute("cart");
+                                         
+                        // case for when an item is being added to the cart for the first time
+                        if(cart != null && cart.size()>0){
+                                               
+                            for(int i=0; i<cart.size(); i++){
 
-                        for(int i=0; i<cart.size(); i++){
+                            String productName = cart.get(i).getName();
+                            Double productPrice = cart.get(i).getPrice();
+                            int productQuantity = cart.get(i).getQuantity();              
+                            int productId = cart.get(i).getId();
+                            double basePrice = cart.get(i).getBasePrice();
+                            
+                            
 
-                        String productName = cart.get(i).getName();
-                        Double productPrice = cart.get(i).getPrice();
-                        int productQuantity = cart.get(i).getQuantity();                                            
-                    %>
-                    
-                    <!-- products list -->
-                    <div class="row">
+                    %>                   
+                    <!-- row in the products list -->
+                    <div class="row mb-3">
                         <!-- product name column -->
-                        <div class="col-sm-8 d-flex flex-row">
-                            <div class="bg-primary" style="width: 100px; height: 100px">
+                        <div class="col-sm-7 d-flex flex-row">
+
+                            <!-- image frame -->
+                            <div class="bg-secondary me-3" style="width: 100px; height: 100px">
                             </div>
-                            <label><%=productName%></label>
+                            
+                            <div class="d-flex flex-column">
+                                <h5 class="mb-0"><%=productName%></h5>
+                                <label class="text-secondary">₱ <%=basePrice%></label>
+                            </div>
+                            
                         </div>
 
                         <!-- quantity column -->
-                        <div class="col-sm-3">
-                            <label><%=productQuantity%></label>
+                        <div class="col-sm-3 d-inline-flex">
+
+                            <!-- hidden form for decrementing or adding to the quantity -->
+                            <!-- decrement product quantity -->
+                            <form action="CartServlet" method="post" style="width: 12px; height:12px;">
+                                <input type="hidden" name="operation" value="decrement">
+                                <input type="hidden" name="id" value="<%=productId%>">
+                                <input type="image" name="submit" src="image/minus-sign.png" style="width: 12px; height: 12px;">
+                            </form>
+                                
+                            <!-- current product quantity -->   
+                            <label class="me-4 ms-4"><%=productQuantity%></label>
+                                
+                            <!-- increment product quantity --> 
+                            <form action="CartServlet" method="post" style="width: 12px; height:12px;">
+                                <input type="hidden" name="operation" value="increment">
+                                <input type="hidden" name="id" value="<%=productId%>">
+                                <input type="image" name="submit" src="image/plus-sign.png" style="width: 12px; height: 12px;">
+                                
+                            <!-- remove from cart -->
+                            </form>
+                                <form action="CartServlet" method="post" class="ms-5" style="width: 12px; height:12px;">
+                                <input type="hidden" name="operation" value="remove">
+                                <input type="hidden" name="id" value="<%=productId%>">
+                                <input type="image" name="submit" src="image/trash-can.png" style="width: 12px; height: 12px;">                                       
+                            </form>
+                                
                         </div>
 
                         <!-- price/total column -->
-                        <div class="col-sm-1">
-                            <label><%=productPrice%></label>
+                        <div class="col-sm-2">
+                            <h5 class="text-end">₱ <%=productPrice%></h5>
                         </div>
                     </div>
+
+                    
+                    <%
+                            }
+                        } 
+
+                        // case for when cart is empty
+                        else{
+                    %>
+                            <!-- product name column -->
+                                <div class="col-sm-7 d-flex flex-row">
+                                    <label>Your cart is empty.</label>
+                                </div>
+
+                                <!-- quantity column -->
+                                <div class="col-sm-3">
+                                    <label></label>
+                                </div>
+
+                                <!-- price/total column -->
+                                <div class="col-sm-2">
+                                    <label></label>
+                                </div>
+                            </div>
+                    
                     <%
                         }
-                    %>                   
-                </div>
+                    %>  
                     
+                    <%
+                      Double cartTotal = (Double)session.getAttribute("total");  
+                    %>
+                    <hr>
+                    <!-- footer row -->
+                    <div class="row">
+                        <div class="col-sm-7 d-flex flex-row">
+                            
+                        </div>
+                        <div class="col-sm-3 d-inline-flex">
+                            
+                        </div>
+                        <div class="col-sm-2 d-flex flex-column">
+                            <h5 class="text-end">₱ <%=cartTotal%></h5>
+                            
+                            <!-- checkout button here -->
+                            <button class="btn btn-primary">Confirm order</button>
+                            
+                        </div>                                             
+                    </div>
+                        
+                </div>                 
             </div>
         </div>        
     </body>
