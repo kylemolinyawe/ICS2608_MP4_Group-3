@@ -30,12 +30,12 @@ public class CartServlet extends HttpServlet {
              add(request, response);
              response.sendRedirect("ProductServlet?id="+id);
         }
-        //user is checking out their cart
+        //if user is already in the cart page and is checking out their cart
         else if(request.getSession().getAttribute("cart")!=null&&!(submit==null))
         {
                buy(request,response);
         }
-        else
+        else //redirect user to their cart page
         {
             response.sendRedirect("cart.jsp");
         }
@@ -95,6 +95,7 @@ public class CartServlet extends HttpServlet {
     }
     protected void buy(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
+        //To add: check out cart and display results in a separate jsp file
         
     }
 
