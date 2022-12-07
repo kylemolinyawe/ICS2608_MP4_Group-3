@@ -51,8 +51,6 @@ public class LoginServlet extends HttpServlet {
             else{
             response.sendError(461);
             return;
-            //RequestDispatcher rd = request.getRequestDispatcher("failedlogin.jsp");  
-            //rd.forward(request, response);
         }
         
 
@@ -105,12 +103,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          String param = request.getParameter("id");
-        if(param!=null && Integer.parseInt(param)>0 && Integer.parseInt(param)<16)
-        {
-            //modified version of processRequest method that adds the previous item to the cart if the guest has successfully logged in
-            processRequestModified(request,response);
-        }
-        else
+         
             processRequest(request, response);
     }
     

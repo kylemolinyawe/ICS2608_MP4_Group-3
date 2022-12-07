@@ -31,7 +31,6 @@ protected boolean checkExistingLogin(HttpServletRequest request,HttpServletRespo
         <div class="container-fluid h-100">
             <div class="row h-100">
                 
-                <!-- TODO: add image here as background -->
                 <div class="col bg-primary">
                 </div>
                 

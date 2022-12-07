@@ -76,7 +76,7 @@ Has ‘Qty.’ buttons and an ‘Add to Cart’ button
                         <label class="mt-4 mb-2">Quantity</label>                        
                         <div class="col-sm-6 d-inline-flex mb-5">
                             <!-- decrement product quantity -->
-                            <form action="ProductServlet" method="get" style="width: 12px; height:12px;">
+                            <form action="ProductServlet" method="post" style="width: 12px; height:12px;">
                                 <input type="hidden" name="operation" value="decrement">
                                 <input type="hidden" name="id" value="<%=productId%>">
                                 <input type="image" name="submit" src="image/minus-sign.png" style="width: 12px; height: 12px;">
@@ -86,7 +86,7 @@ Has ‘Qty.’ buttons and an ‘Add to Cart’ button
                             <label class="me-4 ms-4"><%=productQuantity%></label>
                                 
                             <!-- increment product quantity --> 
-                            <form action="ProductServlet" method="get" style="width: 12px; height:12px;">
+                            <form action="ProductServlet" method="post" style="width: 12px; height:12px;">
                                 <input type="hidden" name="operation" value="increment">
                                 <input type="hidden" name="id" value="<%=productId%>">
                                 <input type="image" name="submit" src="image/plus-sign.png" style="width: 12px; height: 12px;">
@@ -101,6 +101,7 @@ Has ‘Qty.’ buttons and an ‘Add to Cart’ button
                         </form>
                             
                         <p><%= productDescription %></p>
+                        
                     </div>
                     
             </div>          

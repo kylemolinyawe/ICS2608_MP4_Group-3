@@ -17,6 +17,9 @@
         <div class="d-flex justify-content-center text-center" style="height: 100%;">
             <div class="border p-4 rounded-4 d-flex flex-column justify-content-center" style="height: 140px; margin-top:200px;">
                 <h4 class="mb-3">You've already logged in!</h4>
+                <form action='ShopServlet?category=All'>
+                    <input type='submit' class="btn btn-primary inline" value='Return to Shop' style="width: 200px;">
+                </form>
             </div>
         </div>
     </body>

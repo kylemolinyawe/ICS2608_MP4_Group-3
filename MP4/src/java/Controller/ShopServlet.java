@@ -78,7 +78,7 @@ public class ShopServlet extends HttpServlet {
         // bind collection to request
         request.setAttribute("products", products);
         
-        // user's cart
+        // intiialize user's cart
         ArrayList<Product> cart = new ArrayList<Product>();
         session.setAttribute("cart", cart);
             

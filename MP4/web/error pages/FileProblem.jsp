@@ -17,7 +17,7 @@
             <div class="border p-4 rounded-4 d-flex flex-column justify-content-center" style="height: 140px; margin-top:200px;">
                 <h4 class="mb-3">An issue has occurred within accessing the server's files, please try to visit later.</h4>
                 <form action='landing.jsp'>
-                    <input type='submit' class="btn btn-primary inline" value='Go Back' style="width: 200px;">
+                    <input type='submit' class="btn btn-primary inline" value='Back to Landing' style="width: 200px;">
                 </form>
             </div>
         </div>

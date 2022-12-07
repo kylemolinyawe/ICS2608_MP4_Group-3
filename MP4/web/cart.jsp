@@ -3,6 +3,7 @@
 <%@page import="java.util.Iterator"%>
 <%@page import="Model.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <% response.setHeader("Cache-Control","no-cache, no-store, must-revalidate");
     if(session.getAttribute("name")==null)
     {
@@ -10,9 +11,11 @@
         return;
     }
     if(session.getAttribute("cart")==null)
+{
     response.sendError(460);
     return;
 }%>
+
 <!DOCTYPE html>
 <html class="h-100">
     <head>
@@ -183,7 +186,7 @@
                             
                             <form action='CheckoutServlet'>
                                   <input type='hidden' name='submit' value='ok'>
-                                  <input type='submit' class='btn btn-primary w-100' value='Checkout'>
+                                  <input type='submit' class='btn btn-primary w-100 mt-3' value='Checkout'>
                             </form>
                             
                         </div>                                             
