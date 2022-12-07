@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Empty Cart!</title>
-        <link rel="styleesheet" href="main.css">
+        <link rel="styleesheet" href="main.css"><link rel="styleesheet" href="main.css">
     </head>
     <body>
         <h1>Your cart is empty, please add more items before proceeding to checkout</h1>
