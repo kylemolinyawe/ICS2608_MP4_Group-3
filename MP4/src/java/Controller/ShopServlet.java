@@ -44,11 +44,16 @@ public class ShopServlet extends HttpServlet {
         String category = request.getParameter("category");               
         List<Product> products = Product.readProductsFile(this.getServletContext());
         
-        if(category.matches("All")||category==null){
+        if(category==null)
+        {
+            response.sendRedirect("ShopServlet?category=All");
+            return;
+        }
+        
+        if(category.matches("All")){
             request.setAttribute("products", products);
             RequestDispatcher rd = request.getRequestDispatcher("shop.jsp");  
             rd.forward(request, response);
-            return;
         }
   
         // create list of products sorted by the category

@@ -177,7 +177,7 @@ public class CartServlet extends HttpServlet {
     {
         HttpSession session = request.getSession();
         String uname = (String)session.getAttribute("name");
-        if(uname!=null)
+        if(uname==null)
             return true;
         else
             return false;
@@ -188,14 +188,7 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(!(verif(request)))
-        {
-            //To do: redirect to an error page showing "You need to be logged in to access the cart."
-            String param = request.getParameter("id");
-            response.sendRedirect("login.jsp?id="+param);
-            return;
-        }
-        else
+        
         processRequest(request, response);
     }
 
@@ -203,14 +196,7 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         if(!(verif(request)))
-        {
-            //To do: redirect to an error page showing "You need to be logged in to access the cart."
-            String param = request.getParameter("id");
-            response.sendRedirect("login.jsp?id="+param);
-            return;
-        }
-        else
+        
         processRequest(request, response);
     }
 

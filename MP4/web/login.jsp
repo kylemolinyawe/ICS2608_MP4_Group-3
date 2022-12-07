@@ -1,3 +1,24 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%! 
+protected boolean checkExistingLogin(HttpServletRequest request,HttpServletResponse response)
+{
+        HttpSession session = request.getSession();
+         String uname = (String)session.getAttribute("name");
+         if(uname!=null)
+         {
+             return true;
+         }
+         else
+             return false;
+}
+%>
+<% response.setHeader("Cache-Control","no-cache, no-store, must-revalidate");
+    if(checkExistingLogin(request,response))
+{       
+    response.sendError(462);
+    return;
+}
+%>
 <!DOCTYPE html>
 <html style="min-height: 100%; height: 100%">
     <head>

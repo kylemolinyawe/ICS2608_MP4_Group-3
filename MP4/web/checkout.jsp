@@ -5,6 +5,19 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+    <% 
+        response.setHeader("Cache-Control","no-cache, no-store, must-revalidate");
+       if(session.getAttribute("name")==null)
+        {
+            response.sendError(401);
+            return;
+        }
+        if(session.getAttribute("cart")==null)
+    {
+        response.sendError(460);
+        return;
+    }
+    %>
 <!DOCTYPE html>
 <html>
     <head>
