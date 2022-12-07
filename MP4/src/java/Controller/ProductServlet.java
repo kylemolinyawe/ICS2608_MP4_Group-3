@@ -21,6 +21,16 @@ import javax.servlet.http.HttpSession;
  */
 public class ProductServlet extends HttpServlet {
 
+     protected boolean verif(HttpServletRequest request) throws ServletException,IOException
+    {
+        HttpSession session = request.getSession();
+        String uname = (String)session.getAttribute("name");
+        if(uname==null)
+            return true;
+        else
+            return false;
+    }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -79,6 +89,12 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if(verif(request))
+        {
+            response.sendError(401);
+            return;
+        }
+        else
         processRequest(request, response);
     }
 
@@ -93,6 +109,12 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if(verif(request))
+        {
+            response.sendError(401);
+            return;
+        }
+        else
         processRequest(request, response);
     }
 

@@ -3,9 +3,15 @@
 <%@page import="java.util.Iterator"%>
 <%@page import="Model.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<% if(session.getAttribute("cart")==null)
+<% response.setHeader("Cache-Control","no-cache, no-store, must-revalidate");
+    if(session.getAttribute("name")==null)
+    {
+        response.sendError(401);
+        return;
+    }
+    if(session.getAttribute("cart")==null)
 {
-    response.sendRedirect("ShopServlet?category=All");
+    response.sendError(460);
     return;
 }%>
 <!DOCTYPE html>

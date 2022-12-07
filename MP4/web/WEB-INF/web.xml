@@ -56,4 +56,27 @@
     <welcome-file-list>
         <welcome-file>landingpage.jsp</welcome-file>
     </welcome-file-list>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error pages/missingPageError.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>401</error-code>
+        <location>/error pages/forbiddenAccess.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>460</error-code>
+        <location>/error pages/emptyCartError.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>461</error-code>
+        <location>/error pages/loginFailure.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>462</error-code>
+        <location>/error pages/alreadyLoggedIn.jsp</location>
+    </error-page>
+    <error-page>
+        <location>/error pafes/missingPageError.jsp</location>
+    </error-page>
 </web-app>

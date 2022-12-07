@@ -10,6 +10,7 @@ Have each item displayed read from a item object file
 <%@page import="java.util.Iterator"%>
 <%@page import="Model.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<% response.setHeader("Cache-Control","no-cache, no-store, must-revalidate"); %>
 <!DOCTYPE html>
 <html class="h-100">
     <head>
