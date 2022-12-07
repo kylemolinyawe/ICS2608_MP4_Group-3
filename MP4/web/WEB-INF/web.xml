@@ -65,8 +65,8 @@
         <location>/error pages/forbiddenAccess.jsp</location>
     </error-page>
     <error-page>
-        <error-code>460</error-code>
-        <location>/error pages/emptyCartError.jsp</location>
+        <exception-type>java.lang.ArrayIndexOutOfBoundException</exception-type>
+        <location>/error pages/FileProblem.jsp</location>
     </error-page>
     <error-page>
         <error-code>461</error-code>
