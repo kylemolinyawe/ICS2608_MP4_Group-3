@@ -112,11 +112,9 @@ public class Product {
     public static List<Product> sortByCategory(String category, List<Product> products){
         List<Product> list = new ArrayList<Product>();
             
-            for(int i = 0; i < products.size(); i++){
-                if(products.get(i).getCategory().matches(category)){
-                    list.add(products.get(i));
-                }else{
-                    // do nothing
+            for(Product p: products){
+                if(p.getCategory().matches(category)){
+                    list.add(p);
                 }
             }
             

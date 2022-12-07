@@ -13,8 +13,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cart</title>
-        <link rel="nav-bar" href="includes/nav-bar.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/main.css">
     </head>
     <body class="h-100">
         <div class="container-fluid h-100">
@@ -25,11 +24,11 @@
             </div>
         
             <!-- secondary nav bar -->
-            <div class="row navbar navbar-expand bg-light" style="height: 40px;">
+            <div class="row navbar navbar-expand bg-secondary" style="height: 40px;">
                 <div class="container-fluid w-75 ps-3 pe-3">
                     <ul class="nav nav-pills">  
                         <li class="nav-item">
-                            <a class="nav-link link-dark" href="ShopServlet?category=All">< Continue Ordering</a>
+                            <a class="nav-link link-black" href="ShopServlet?category=All">< Continue Ordering</a>
                         </li>
                     </ul>
                 </div>
@@ -75,6 +74,7 @@
                             for(int i=0; i<cart.size(); i++){
 
                             String productName = cart.get(i).getName();
+                            String imgURL = cart.get(i).getImgURL();
                             Double productPrice = cart.get(i).getPrice();
                             int productQuantity = cart.get(i).getQuantity();              
                             int productId = cart.get(i).getId();
@@ -87,11 +87,12 @@
 
                             <!-- image frame -->
                             <div class="bg-secondary me-3" style="width: 100px; height: 100px">
+                                <img src="<%=imgURL%>" class="img-fluid h-100 w-100">
                             </div>
                             
                             <div class="d-flex flex-column">
                                 <h5 class="mb-0"><%=productName%></h5>
-                                <label class="text-secondary">₱ <%=basePrice%></label>
+                                <label class="text-gray">₱ <%=basePrice%></label>
                             </div>
                             
                         </div>
@@ -175,7 +176,6 @@
                         <div class="col-sm-2 d-flex flex-column">
                             <h5 class="text-end">₱ <%=cartTotal%></h5>
                             
-                            <!-- Replace this with a finalized version  -->
                             <form action='CheckoutServlet'>
                                   <input type='hidden' name='submit' value='ok'>
                                   <input type='submit' class='btn btn-primary w-100' value='Checkout'>

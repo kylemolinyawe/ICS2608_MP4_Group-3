@@ -40,6 +40,7 @@ public class ShopServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        // get category 
         String category = request.getParameter("category");               
         List<Product> products = Product.readProductsFile(this.getServletContext());
         
@@ -50,6 +51,7 @@ public class ShopServlet extends HttpServlet {
             return;
         }
   
+        // create list of products sorted by the category
         List<Product> sortedProducts = Product.sortByCategory(category, products);
         
         request.setAttribute("products", sortedProducts);

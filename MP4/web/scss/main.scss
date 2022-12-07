@@ -1,0 +1,31 @@
+$primary: #50543c;
+$secondary: #e1bc1c;
+$black: #262626;
+
+@font-face{
+    font-family: "Maragsa";
+    src: url("font/Maragsa.otf") format("opentype");
+}
+
+h1{
+    font-family: "Maragsa", sans-serif !important;
+    
+}
+
+$theme-colors:(
+    "primary": $primary,
+    "secondary": $secondary,
+    "black": $black,
+);
+
+.link-active{
+    color: $black;
+}
+
+.navbar{
+    background-image: url("/texture/1.jpg")
+}
+
+$link-color: white;
+
+@import "../node_modules/bootstrap/scss/bootstrap";
