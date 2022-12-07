@@ -1,3 +1,5 @@
+<%@page import="Model.Product"%>
+<%@page import="java.util.ArrayList"%>
 <!--
  TODO:
 Change login to logout on successful login (done using sessions!)
@@ -19,10 +21,39 @@ Display user on here?
                 if(request.getSession(false) != null){        
             %>             
                     <li class=nav-item>
+                        <%
+                            if(session.getAttribute("name")==null)
+                            {
+                         %>
+                         <a class='nav-link link-light' href='login.jsp'>Login</a>
+                         <%       
+                            }
+                            else
+                            {
+                        %>
                         <a class="nav-link link-light" href="LogoutServlet">Logout</a>
+                        <%  } %>
                     </li>
                     <li class=nav-item>
-                        <a class="nav-link link-light" href="CartServlet">Cart</a>
+                        <% if(session.getAttribute("cart")==null)
+                            {
+                         %>
+                          <a class="nav-link link-light" href="CartServlet">Cart</a>
+                        <%
+                            }
+                            else
+                            {
+                                int qty=0;
+                                ArrayList<Product> s =(ArrayList<Product>)session.getAttribute("cart");
+                                for(Product p: s)
+                                {
+                                    qty+=p.getQuantity();
+}
+                        %>
+                        <a class='nav-link link-light' href="CartServlet">Cart (<%=qty%>)</a>
+                        <%
+                            }
+                        %>
                     </li>                  
             <%
                 }

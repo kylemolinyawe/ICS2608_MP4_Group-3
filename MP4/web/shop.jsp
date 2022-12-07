@@ -78,7 +78,7 @@ Have each item displayed read from a item object file
 
                                 <!-- product name -->
                                 <!-- NOTE: account longest product name for final height -->
-                                <div class="container-fluid p-0 pt-3" style="height: 60px">
+                                <div class="container-fluid p-0 pt-3" style="height: 75px">
                                     <h5 class=name><%= productName %></h5>
                                 </div>
                                 <hr>

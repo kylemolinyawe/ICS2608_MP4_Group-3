@@ -30,10 +30,16 @@ public class CartServlet extends HttpServlet {
              add(request, response);
              response.sendRedirect("ProductServlet?id="+id);
         }
+        else if(request.getSession().getAttribute("cart")==null)
+        {
+            //should redirect to an error page that says the user's cart is empty.
+            response.sendRedirect("ShopServlet?category=all");
+        }
         //if user is already in the cart page and is checking out their cart
-        else if(request.getSession().getAttribute("buy")!=null&&!(submit==null))
+        else if(request.getSession().getAttribute("cart")!=null&&submit!=null)
         {
                buy(request,response);
+               System.out.println("Valid");
         }
         else //redirect user to their cart page
         {
@@ -69,7 +75,7 @@ public class CartServlet extends HttpServlet {
             // case for adding a duplicate to the cart
             if(Product.exists(Integer.parseInt(request.getParameter("id")), (ArrayList<Product>)cart)){
                 
-                int index = Product.searchProduct(Integer.parseInt(request.getParameter("id")), products);
+                int index = Product.searchProduct(Integer.parseInt(request.getParameter("id")), cart);
                 
                 Product product = cart.get(index);
                 int currentQuantity = product.getQuantity();
@@ -104,7 +110,22 @@ public class CartServlet extends HttpServlet {
         {
             TotalPrice += p.getPrice();
         }
+        System.out.println("you reached here 1");
+        request.setAttribute("Total", TotalPrice);
+        System.out.println("here 2");
+        RequestDispatcher rd = request.getRequestDispatcher("checkout.jsp");
+        rd.forward(request, response);
         
+    }
+    
+    protected boolean verif(HttpServletRequest request) throws ServletException,IOException
+    {
+        HttpSession session = request.getSession();
+        String uname = (String)session.getAttribute("name");
+        if(uname!=null)
+            return true;
+        else
+            return false;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -112,6 +133,14 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if(!(verif(request)))
+        {
+            //To do: redirect to an error page showing "You need to be logged in to access the cart."
+            String param = request.getParameter("id");
+            response.sendRedirect("login.jsp?id="+param);
+            return;
+        }
+        else
         processRequest(request, response);
     }
 
@@ -119,6 +148,14 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         if(!(verif(request)))
+        {
+            //To do: redirect to an error page showing "You need to be logged in to access the cart."
+            String param = request.getParameter("id");
+            response.sendRedirect("login.jsp?id="+param);
+            return;
+        }
+         else
         processRequest(request, response);
     }
 
