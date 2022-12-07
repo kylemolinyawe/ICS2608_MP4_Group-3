@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 /**
  * 
@@ -25,6 +26,7 @@ public class ShopServlet extends HttpServlet {
              
     }
     
+    // doGet when a user proceeds as a guest
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -49,16 +51,22 @@ public class ShopServlet extends HttpServlet {
         rd.forward(request, response);
         
     }
-
+    
+    // doPost on a succesful login
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) // working fine
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
         List<Product> products = Product.readProductsFile(this.getServletContext());
+        HttpSession session = request.getSession();
         
         // bind collection to request
         request.setAttribute("products", products);
+        
+        // user's cart
+        ArrayList<Product> cart = new ArrayList<Product>();
+        session.setAttribute("cart", cart);
             
         RequestDispatcher rd = request.getRequestDispatcher("shop.jsp");  
         rd.forward(request, response);

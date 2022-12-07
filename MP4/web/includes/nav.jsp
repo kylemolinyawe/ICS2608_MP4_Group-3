@@ -14,18 +14,15 @@ Display user on here?
         
         <!-- website navigation links -->
         <ul class="nav navbar">
-            <%
+            <%                                                  
                 // session does not exists
-                if(request.getSession(false) == null){
+                if(session.getAttribute("cart") == null){
             %>
-                    <li class=nav-item><a href=login.jsp>Login</a></li>
+                    <li class=nav-item><a class="nav-link link-light" href=login.jsp>Login</a></li>
             <%
                 }
-            %>
-            
-            <%
                 // session exists (succesful login)
-                if(request.getSession(false) != null){        
+                else{        
             %>             
                     <li class=nav-item>
                         <a class="nav-link link-light" href="LogoutServlet">Logout</a>
@@ -36,9 +33,6 @@ Display user on here?
             <%
                 }
             %>
-            
-           
-
         </ul>
     </div>
 </nav>
