@@ -13,13 +13,13 @@ n
         <!-- website navigation links -->
         <ul class="nav navbar">
             <%                                                  
-                // session does not exists
+                // cart does not exist
                 if(session.getAttribute("cart") == null){
             %>
                     <li class=nav-item><a class="nav-link link-light" href=login.jsp>Login</a></li>
             <%
                 }
-                // session exists (succesful login)
+                // cart exists (succesful login)
                 else{        
             %>             
                     <li class=nav-item>
@@ -37,8 +37,15 @@ n
                         <%  } %>
                     </li>
                     <li class=nav-item>
-
-                        <a class="nav-link link-light" href="cart.jsp">Cart</a>
+                    <%                        
+                                int qty=0;
+                                ArrayList<Product> s =(ArrayList<Product>)session.getAttribute("cart");
+                                for(Product p: s)
+                                {
+                                    qty+=p.getQuantity();
+                                }
+                    %>
+                        <a class="nav-link link-light" href="cart.jsp">Cart (<%=qty%>)</a>
 
                     </li>                  
             <%
