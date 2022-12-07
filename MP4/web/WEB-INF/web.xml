@@ -65,7 +65,11 @@
         <location>/error pages/forbiddenAccess.jsp</location>
     </error-page>
     <error-page>
-        <exception-type>java.lang.ArrayIndexOutOfBoundException</exception-type>
+        <exception-type>java.lang.ArrayIndexOutOfBoundsException</exception-type>
+        <location>/error pages/FileProblem.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.io.IOException</exception-type>
         <location>/error pages/FileProblem.jsp</location>
     </error-page>
     <error-page>
@@ -77,6 +81,6 @@
         <location>/error pages/alreadyLoggedIn.jsp</location>
     </error-page>
     <error-page>
-        <location>/error pafes/missingPageError.jsp</location>
+        <location>/error pages/FileProblem.jsp</location>
     </error-page>
 </web-app>

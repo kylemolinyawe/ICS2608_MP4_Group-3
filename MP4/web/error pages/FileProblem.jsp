@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Empty Cart!</title>
-        <link rel="styleesheet" href="main.css"><link rel="styleesheet" href="main.css">
+        <link rel="stylesheet" href="css/main.css">
     </head>
     <body style="height:100%">
         <div class="d-flex justify-content-center text-center" style="height: 100%;">

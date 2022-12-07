@@ -41,10 +41,9 @@ public class User {
     }
     
     //Reads the users.txt and stores the values in a list of user objects
-    public static List<User> readUsersFile(ServletContext servletContext){
+    public static List<User> readUsersFile(ServletContext servletContext)throws IOException{
  
         List<User> list = new ArrayList<>();
-        try   {  
 
         InputStream ins = servletContext.getResourceAsStream("/files/users.txt");
         InputStreamReader isr = new InputStreamReader(ins);
@@ -54,9 +53,6 @@ public class User {
                     String[] byComma = line.split(",");
                     list.add(new User(Integer.parseInt(byComma[0]), byComma[1], byComma[2], byComma[3]));
                 }
-        }catch (IOException e){  
-            e.printStackTrace();  
-        }
 
         return list;
     }
