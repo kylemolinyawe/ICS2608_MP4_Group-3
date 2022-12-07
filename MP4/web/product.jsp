@@ -8,6 +8,7 @@ Has ‘Qty.’ buttons and an ‘Add to Cart’ button
 <%@page import="java.util.Iterator"%>
 <%@page import="Model.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<% response.setHeader("Cache-Control","no-cache, no-store, must-revalidate"); %>
 <!DOCTYPE html>
 <html class="h-100">
     <head>
@@ -70,7 +71,7 @@ Has ‘Qty.’ buttons and an ‘Add to Cart’ button
                         <a href="CartServlet?id=<%=productId%>">
                             <button class="btn btn-primary">Add to Cart</button>
                         </a>
-                        <p><%= productDescription %>e</p>
+                        <p><%= productDescription %></p>
                     </div>
                     
             </div>          

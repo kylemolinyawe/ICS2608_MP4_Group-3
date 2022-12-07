@@ -25,7 +25,7 @@ public class CartServlet extends HttpServlet {
         String id = request.getParameter("id");
         String submit=request.getParameter("submit");
         //Only adds an item to cart without going to the cart page
-        if(id!=null&&Integer.parseInt(id)>0 && Integer.parseInt(id)<15)
+        if(id!=null&&Integer.parseInt(id)>0 && Integer.parseInt(id)<17)
         {
              add(request, response);
              response.sendRedirect("ProductServlet?id="+id);
@@ -33,7 +33,8 @@ public class CartServlet extends HttpServlet {
         else if(request.getSession().getAttribute("cart")==null)
         {
             //should redirect to an error page that says the user's cart is empty.
-            response.sendRedirect("ShopServlet?category=all");
+            response.sendError(460);
+            return;
         }
         //if user is already in the cart page and is checking out their cart
         else if(request.getSession().getAttribute("cart")!=null&&submit!=null)
@@ -110,9 +111,7 @@ public class CartServlet extends HttpServlet {
         {
             TotalPrice += p.getPrice();
         }
-        System.out.println("you reached here 1");
         request.setAttribute("Total", TotalPrice);
-        System.out.println("here 2");
         RequestDispatcher rd = request.getRequestDispatcher("checkout.jsp");
         rd.forward(request, response);
         
@@ -122,7 +121,7 @@ public class CartServlet extends HttpServlet {
     {
         HttpSession session = request.getSession();
         String uname = (String)session.getAttribute("name");
-        if(uname!=null)
+        if(uname==null)
             return true;
         else
             return false;
@@ -133,10 +132,16 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(!(verif(request)))
+        if(verif(request))
         {
-            //To do: redirect to an error page showing "You need to be logged in to access the cart."
+            
             String param = request.getParameter("id");
+            if(param==null)
+            {
+                response.sendError(401);
+                return;
+            }
+            else //instead of an error page redirects to the login page
             response.sendRedirect("login.jsp?id="+param);
             return;
         }
@@ -148,10 +153,15 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         if(!(verif(request)))
+         if(verif(request))
         {
-            //To do: redirect to an error page showing "You need to be logged in to access the cart."
             String param = request.getParameter("id");
+            if(param==null)
+            {
+                response.sendError(401);
+                return;
+            }
+            else //instead of an error page redirects to the login page
             response.sendRedirect("login.jsp?id="+param);
             return;
         }
