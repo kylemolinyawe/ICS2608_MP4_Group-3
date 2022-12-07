@@ -91,7 +91,7 @@ public class Product {
             String line = "";
             while ((line = reader.readLine()) != null) {
                 String[] byComma = line.split(",");
-                byComma[4]=byComma[4].replaceAll("[%]%c\\W", ",");
+                byComma[4] = byComma[4].replaceAll("[%]%c\\W", ",");
                 list.add(new Product(Integer.parseInt(byComma[0]), 
                                      byComma[1], 
                                      Double.parseDouble(byComma[2]), 

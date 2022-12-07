@@ -65,7 +65,7 @@
         <location>/error pages/forbiddenAccess.jsp</location>
     </error-page>
     <error-page>
-        <exception-type>java.lang.ArrayIndexOutOfBoundException</exception-type>
+        <exception-type>java.lang.ArrayIndexOutOfBoundsException</exception-type>
         <location>/error pages/FileProblem.jsp</location>
     </error-page>
     <error-page>
