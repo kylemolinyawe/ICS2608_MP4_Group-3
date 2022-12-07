@@ -175,18 +175,18 @@
                         <div class="col-sm-2 d-flex flex-column">
                             <h5 class="text-end">₱ <%=cartTotal%></h5>
                             
-                            <!-- checkout button here -->
-                            <button class="btn btn-primary">Confirm order</button>
+                            <!-- Replace this with a finalized version  -->
+                            <form action='CheckoutServlet'>
+                                  <input type='hidden' name='submit' value='ok'>
+                                  <input type='submit' class='btn btn-primary w-100' value='Checkout'>
+                            </form>
                             
                         </div>                                             
                     </div>
                         
                 </div>                 
             </div>
-                <=<!-- Replace this with a finalized version  -->
-                <form action='CartServlet'>
-                      <input type='hidden' name='submit' value='ok'>
-                      <input type='submit' class='btn btn-primary w-100' value='Checkout'></form>
+                
         </div>        
     </body>
 </html>

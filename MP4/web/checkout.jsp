@@ -12,6 +12,7 @@
         <title>Checkout Success!</title>
     </head>
     <body>
-        <h1>Hello World! Your total is <%=request.getAttribute("Total").toString() %></h1>
+        <h1>Your order is on the way!</h1>
+        <h3>Your total is <%=request.getAttribute("total")%></h3>
     </body>
 </html>

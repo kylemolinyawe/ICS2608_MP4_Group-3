@@ -172,27 +172,7 @@ public class CartServlet extends HttpServlet {
             
 
     }
-        
-    
-    protected void buy(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException 
-    {
-       
-        Double TotalPrice = 0.0;
-        HttpSession session = request.getSession();
-        List<Product> productList = (ArrayList<Product>)session.getAttribute("cart");
-        for(Product p: productList)
-        {
-            TotalPrice += p.getPrice();
-        }
-        System.out.println("you reached here 1");
-        request.setAttribute("Total", TotalPrice);
-        System.out.println("here 2");
-        RequestDispatcher rd = request.getRequestDispatcher("checkout.jsp");
-        rd.forward(request, response);
-        
-    }
-    
+           
     protected boolean verif(HttpServletRequest request) throws ServletException,IOException
     {
         HttpSession session = request.getSession();
@@ -230,7 +210,7 @@ public class CartServlet extends HttpServlet {
             response.sendRedirect("login.jsp?id="+param);
             return;
         }
-         else
+        else
         processRequest(request, response);
     }
 
