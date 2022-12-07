@@ -40,37 +40,55 @@ Has ‘Qty.’ buttons and an ‘Add to Cart’ button
             <div class="row h-100 w-75 ps-2 pe-2 mx-auto">
                 
                 <%
-                    // get the product index and products list
-                    int index = (Integer)request.getAttribute("index");
-                    ArrayList<Product> products = (ArrayList<Product>)request.getAttribute("products");
 
-                    Product product = products.get(index);
+                    Product product = (Product)session.getAttribute("product");
 
                     int productId = product.getId();
                     String productName = product.getName();
                     String imgURL = product.getImgURL();
                     double productPrice = product.getBasePrice();
                     String productDescription = product.getDescription();
-                    String productCategory = product.getCategory(); 
+                    int productQuantity = product.getQuantity();
                         
                 %>
                     
                     <!-- image panel -->
-                    <div class="col-sm-6 h-100 p-3">
-                        <div class="bg-secondary w-100" style="height:500px">
+                    <div class="col-sm-7 h-100 p-3">
+                        <div class="bg-secondary w-100" style="height:600px">
                             
                         </div>
                     </div>     
                                                          
                     <!-- product information panel -->
-                    <div class="col-sm-6 h-100 p-3 d-flex flex-column">
-                        <h2><%= productName %></h2>
-                        <h4>PHP <%= productPrice %></h4>
+                    <div class="col-sm-5 h-100 p-3 d-flex flex-column">
+                        <h1><%= productName %></h1>
+                        <h4>₱ <%= productPrice %></h4>
                         
-                        <!-- hidden form field -->
-                       <form action="CartServlet" method="post">
+                        <label class="mt-4 mb-2">Quantity</label>                        
+                        <div class="col-sm-6 d-inline-flex mb-5">
+                            <!-- decrement product quantity -->
+                            <form action="ProductServlet" method="post" style="width: 12px; height:12px;">
+                                <input type="hidden" name="operation" value="decrement">
+                                <input type="hidden" name="id" value="<%=productId%>">
+                                <input type="image" name="submit" src="image/minus-sign.png" style="width: 12px; height: 12px;">
+                            </form>
+                                
+                            <!-- current product quantity -->   
+                            <label class="me-4 ms-4"><%=productQuantity%></label>
+                                
+                            <!-- increment product quantity --> 
+                            <form action="ProductServlet" method="post" style="width: 12px; height:12px;">
+                                <input type="hidden" name="operation" value="increment">
+                                <input type="hidden" name="id" value="<%=productId%>">
+                                <input type="image" name="submit" src="image/plus-sign.png" style="width: 12px; height: 12px;">
+                            </form>                            
+                        </div>
+                                
+                        <!-- hidden form field for submit button -->
+                        <form action="CartServlet" method="post" class="mb-4">
                             <input type="hidden" name="id" value="<%=productId%>">
-                            <input type="submit" class="btn btn-primary" value="Add to Cart">
+                            <input type="hidden" id="quantity" name="quantity" value=""<%=productQuantity%>">
+                            <input type="submit" class="btn btn-primary w-100" value="Add to Cart">
                         </form>
                             
                         <p><%= productDescription %>e</p>

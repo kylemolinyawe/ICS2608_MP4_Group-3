@@ -28,6 +28,7 @@ public class Product {
         this.imgURL = imgURL;
         this.description = description;
         this.category = category;
+        this.quantity = 1;
     }
 
     // setters and
@@ -155,7 +156,7 @@ public class Product {
         return false;
     }
     
-    public void totalPrice(){
+    public void updateTotalPrice(){
         this.price = this.quantity * this.basePrice;
     }
     

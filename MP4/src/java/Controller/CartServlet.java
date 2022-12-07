@@ -50,7 +50,7 @@ public class CartServlet extends HttpServlet {
                     index = Product.searchProduct(productId, cart);
                     
                     cart.get(index).incrementQuantity();                   
-                    cart.get(index).totalPrice();
+                    cart.get(index).updateTotalPrice();
                                       
                     session.setAttribute("total", getTotal(cart));
                     session.setAttribute("cart", cart);
@@ -78,7 +78,7 @@ public class CartServlet extends HttpServlet {
                            rd.forward(request, response);
 
                         } else{
-                           cart.get(index).totalPrice();                   
+                           cart.get(index).updateTotalPrice();                   
 
                            session.setAttribute("total", getTotal(cart));
                            session.setAttribute("cart", cart);
@@ -131,19 +131,23 @@ public class CartServlet extends HttpServlet {
     
     
     protected void addToCart(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException{
+        
         List<Product> products = Product.readProductsFile(this.getServletContext());
         ArrayList<Product> cart = (ArrayList<Product>)session.getAttribute("cart");
+        Product product = (Product)session.getAttribute("product");
         
         // case for adding a duplicate product
         if(Product.exists(Integer.parseInt(request.getParameter("id")), (ArrayList<Product>)cart)){
-
-            int index = Product.searchProduct(Integer.parseInt(request.getParameter("id")), products);
-
-            Product product = cart.get(index);
-            int currentQuantity = product.getQuantity();
-
-            cart.get(index).setQuantity(++currentQuantity);
-            cart.get(index).totalPrice();
+            
+            // get quantity from product inside the cart
+            int index = Product.searchProduct(Integer.parseInt(request.getParameter("id")), cart);
+            Product cartProduct = cart.get(index);
+            
+            Product sessionProduct = (Product)session.getAttribute("product");
+            
+            // add cart product quantity with session produict quantity
+            cartProduct.setQuantity(cartProduct.getQuantity() + sessionProduct.getQuantity());
+            cartProduct.updateTotalPrice();
 
             session.setAttribute("total", getTotal(cart));
             session.setAttribute("cart", cart);
@@ -152,12 +156,10 @@ public class CartServlet extends HttpServlet {
 
         // case for distinct item being added to the cart
         else{
-            int index = Product.searchProduct(Integer.parseInt(request.getParameter("id")), products);
-
-            products.get(index).setQuantity(1);        
-            products.get(index).totalPrice();
-
-            cart.add(products.get(index));
+                      
+            product.updateTotalPrice();
+            
+            cart.add(product);
 
             session.setAttribute("total", getTotal(cart));
             session.setAttribute("cart", cart);
