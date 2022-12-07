@@ -69,7 +69,7 @@
             </div>
             <div class="home-logo"></div>
             <div class="home-cta-container">
-                <button class="home-cta-btn button Anchor"><a href="./LogoutServlet">Login</a></button>
+                <button class="home-cta-btn button Anchor"><a href="login.jsp">Login</a></button>
               <div data-role="BurgerMenu" class="home-burger-menu">
                 <svg viewBox="0 0 1024 1024" class="home-icon">
                   <path
@@ -82,7 +82,7 @@
               <div class="home-top">
                 <img
                   alt="image"
-                  src="image/default-img.svg"
+                  src="/image/default-img.svg"
                   class="home-image"
                 />
                 <div data-role="CloseMobileMenu" class="home-container1">
@@ -138,7 +138,7 @@
               <button class="home-cta-btn2 button Anchor"><a href="ShopServlet?category=All">START SHOPPING AS GUEST</a></button>
           </div>
           <img
-            src="./image-500h.png"
+            src="./image/image-500h.png"
             alt="image"
             class="home-image1"
           />

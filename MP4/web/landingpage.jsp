@@ -82,7 +82,7 @@
               <div class="home-top">
                 <img
                   alt="image"
-                  src="image/default-img.svg"
+                  src="/image/default-img.svg"
                   class="home-image"
                 />
                 <div data-role="CloseMobileMenu" class="home-container1">
