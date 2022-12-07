@@ -3,11 +3,11 @@
 <!--
 n
 -->
-<nav class="navbar navbar-expand-lg bg-secondary" style="height: 70px;">
+<nav class="navbar navbar-expand-lg bg-primary" style="height: 80px;">
     <div class="container-fluid w-75 ps-3 pe-3">
         
         <!-- website logo -->
-        <h3 class="text-light">branding here</h3>
+        <img src="image/lasa-logo-white.png" style="height:50px;">
         
         
         <!-- website navigation links -->
@@ -16,27 +16,15 @@ n
                 // cart does not exist
                 if(session.getAttribute("cart") == null){
             %>
-                    <li class=nav-item><a class="nav-link link-light" href=login.jsp>Login</a></li>
+                    <li class=nav-item><a class="nav-link link p-0" href=login.jsp>Login</a></li>
             <%
                 }
                 // cart exists (succesful login)
                 else{        
             %>             
-                    <li class=nav-item>
-                        <%
-                            if(session.getAttribute("name")==null)
-                            {
-                         %>
-                         <a class='nav-link link-light' href='login.jsp'>Login</a>
-                         <%       
-                            }
-                            else
-                            {
-                        %>
-                        <a class="nav-link link-light" href="LogoutServlet">Logout</a>
-                        <%  } %>
+                    <li class="nav-item">   
+                        <a class="nav-link main-nav-bar" href="LogoutServlet">Logout</a>
                     </li>
-                    <li class=nav-item>
                     <%                        
                                 int qty=0;
                                 ArrayList<Product> s =(ArrayList<Product>)session.getAttribute("cart");
@@ -45,8 +33,8 @@ n
                                     qty+=p.getQuantity();
                                 }
                     %>
-                        <a class="nav-link link-light" href="cart.jsp">Cart (<%=qty%>)</a>
-
+                    <li class=nav-item>                   
+                        <a class="nav-link link-light ms-3 p-0" href="cart.jsp">Cart (<%=qty%>)</a>
                     </li>                  
             <%
                 }
