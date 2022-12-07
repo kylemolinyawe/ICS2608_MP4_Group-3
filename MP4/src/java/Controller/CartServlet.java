@@ -4,6 +4,7 @@ package Controller;
 import Model.Product;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,96 +14,170 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * 
  * @author Kyle Molinyawe
+ * Servlet that handles requests from product.jsp and from itself
+ * Such as decrementing, incrementing product quantity.
+ * And removing the product from the cart.
+ * 
  */
 public class CartServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+                         
+        HttpSession session = request.getSession();
+        String operation = request.getParameter("operation");
         
-        String id = request.getParameter("id");
-        String submit=request.getParameter("submit");
-        //Only adds an item to cart without going to the cart page
-        if(id!=null&&Integer.parseInt(id)>0 && Integer.parseInt(id)<15)
-        {
-             add(request, response);
-             response.sendRedirect("ProductServlet?id="+id);
+        // case for adding cart products from the product.jsp page
+        if(operation == null){
+            addToCart(request, response, session);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("cart.jsp");
+            rd.forward(request, response);
         }
-        else if(request.getSession().getAttribute("cart")==null)
-        {
-            //should redirect to an error page that says the user's cart is empty.
-            response.sendRedirect("ShopServlet?category=all");
+        
+        // case for removing a product, incrementing decrementing quantity, from cart.jsp
+        else{
+            int productId = Integer.parseInt(request.getParameter("id"));  
+            ArrayList<Product> cart = (ArrayList<Product>)session.getAttribute("cart");
+            
+            int index;
+            RequestDispatcher rd = request.getRequestDispatcher("cart.jsp");
+            
+            // evaluates the operation string and either increment or decrements the quantity
+            // or remove the product entirely from the cart
+            switch(operation){
+                case "increment":
+                    
+                    index = Product.searchProduct(productId, cart);
+                    
+                    cart.get(index).incrementQuantity();                   
+                    cart.get(index).updateTotalPrice();
+                                      
+                    session.setAttribute("total", getTotal(cart));
+                    session.setAttribute("cart", cart);
+                    
+                    rd.forward(request, response);
+                    
+                    break;
+                
+                case "decrement":
+                    
+                    index = Product.searchProduct(productId, cart);
+                    cart.get(index).decrementQuantity();
+                    
+                    // case for decrementing and removing the final product
+                    if(cart.get(index).isQuantityZero()){
+                        
+                        cart.remove(index);
+                        
+                        rd.forward(request, response);
+                                           
+                    } else{
+                        
+                        if(cart.isEmpty()){
+
+                           rd.forward(request, response);
+
+                        } else{
+                           cart.get(index).updateTotalPrice();                   
+
+                           session.setAttribute("total", getTotal(cart));
+                           session.setAttribute("cart", cart);
+
+                           rd.forward(request, response);
+                        }
+                        
+                    }
+                                                                                               
+                   break;
+                                            
+                case "remove":
+                    
+                    index = Product.searchProduct(productId, cart);
+                    cart.remove(index);
+                    
+                    // case for removing the final product
+                    if(cart.isEmpty()){
+                        
+                        rd.forward(request, response);
+                        
+                    } else{
+
+                        session.setAttribute("total", getTotal(cart));
+                        session.setAttribute("cart", cart);
+
+                        rd.forward(request, response);
+                        
+                    }
+                 
+                    break;
+            }
+          
+            
         }
-        //if user is already in the cart page and is checking out their cart
-        else if(request.getSession().getAttribute("cart")!=null&&submit!=null)
-        {
-               buy(request,response);
-               System.out.println("Valid");
-        }
-        else //redirect user to their cart page
-        {
-            response.sendRedirect("cart.jsp");
-        }
-       
+
         
     }
-    protected void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
-                List<Product> products = Product.readProductsFile(this.getServletContext());
+    
+    protected double getTotal(ArrayList<Product>cart){
         
-        HttpSession session = request.getSession();
-                  
-        // If no cart is found initialize one and add the item.
-        if(session.getAttribute("cart") == null){
-            List<Product> cart = new ArrayList<Product>();           
-            int index = Product.searchProduct(Integer.parseInt(request.getParameter("id")), products);
+        double total = 0;
+        
+        for(Product p: cart){
+            total += p.getBasePrice() * p.getQuantity();
+        }
+        
+        return total;
+        
+    }
+    
+    
+    protected void addToCart(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException{
+        
+        List<Product> products = Product.readProductsFile(this.getServletContext());
+        ArrayList<Product> cart = (ArrayList<Product>)session.getAttribute("cart");
+        Product product = (Product)session.getAttribute("product");
+        
+        // case for adding a duplicate product
+        if(Product.exists(Integer.parseInt(request.getParameter("id")), (ArrayList<Product>)cart)){
             
-            products.get(index).setQuantity(1);
-            products.get(index).totalPrice();
+            // get quantity from product inside the cart
+            int index = Product.searchProduct(Integer.parseInt(request.getParameter("id")), cart);
+            Product cartProduct = cart.get(index);
             
-            cart.add(products.get(index));           
+            Product sessionProduct = (Product)session.getAttribute("product");
+            
+            // add cart product quantity with session produict quantity
+            cartProduct.setQuantity(cartProduct.getQuantity() + sessionProduct.getQuantity());
+            cartProduct.updateTotalPrice();
+
+            session.setAttribute("total", getTotal(cart));
             session.setAttribute("cart", cart);
+
         } 
 
-        // If there is a cart get the cart from the session add the item
-        // and set it back via the session attribute "cart"
+        // case for distinct item being added to the cart
         else{
+                      
+            product.updateTotalPrice();
             
-            List<Product> cart = (ArrayList<Product>)session.getAttribute("cart");
+            cart.add(product);
 
-            // case for adding a duplicate to the cart
-            if(Product.exists(Integer.parseInt(request.getParameter("id")), (ArrayList<Product>)cart)){
-                
-                int index = Product.searchProduct(Integer.parseInt(request.getParameter("id")), cart);
-                
-                Product product = cart.get(index);
-                int currentQuantity = product.getQuantity();
-                
-                cart.get(index).setQuantity(++currentQuantity);
-                cart.get(index).totalPrice();
-                
-                session.setAttribute("cart", cart);
-                                              
-            } 
+            session.setAttribute("total", getTotal(cart));
+            session.setAttribute("cart", cart);
+        }
+            
 
-            // case for distinct item being added to the cart
-            else{
-                int index = Product.searchProduct(Integer.parseInt(request.getParameter("id")), products);
-                               
-                products.get(index).setQuantity(1);        
-                products.get(index).totalPrice();
-                
-                cart.add(products.get(index));
-                session.setAttribute("cart", cart);
-            }
-        }                 
     }
+        
+    
     protected void buy(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException 
     {
-        //To add: check out cart and display results in a separate jsp file
+       
         Double TotalPrice = 0.0;
         HttpSession session = request.getSession();
         List<Product> productList = (ArrayList<Product>)session.getAttribute("cart");

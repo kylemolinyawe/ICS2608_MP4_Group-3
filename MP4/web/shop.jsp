@@ -29,16 +29,37 @@ Have each item displayed read from a item object file
             <!-- categories bar -->
             <div class="row" style="height: 40px;">
                 <div class="container-fluid w-75 ps-3 pe-3 navbar navbar-fixed-top p-0 bg-light">
-                    <ul class="nav nav-pills">  
+                    <ul class="nav nav-pills">
+                        
+
+                        
+                        <%
+                            // scriptlet that sets currentcategory to what is currently in the request.getParameter("category")
+                            // which allows for each nav-item to be dynamically active on the website
+                            String currentCategory;
+                            if(request.getParameter("category") != null){
+                                currentCategory = request.getParameter("category");
+                            } else{
+                                currentCategory = "All";
+                            }                       
+                        %>
                         <li class="nav-item">
-                            <a class="nav-link active rounded-0" href="ShopServlet?category=Breakfast">Breakfast</a>
+                            <a class="nav-link rounded-0 <%if(currentCategory.contains("All")){out.print("active text-light");}else{out.print("text-dark");}%>" 
+                            href="ShopServlet?category=All">All</a>
+                        </li>      
+                        <li class="nav-item">
+                            <a class="nav-link rounded-0 <%if(currentCategory.contains("Breakfast")){out.print("active text-light");}else{out.print("text-dark");}%>" 
+                            href="ShopServlet?category=Breakfast">Breakfast</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link link-dark" href="ShopServlet?category=Pastry">Pastry</a>
+                            <a class="nav-link rounded-0 <%if(currentCategory.contains("Pastry")){out.print("active text-light");}else{out.print("text-dark");}%>"
+                            href="ShopServlet?category=Pastry">Pastry</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link link-dark" href="ShopServlet?category=Drinks">Drinks</a>
+                            <a class="nav-link rounded-0 <%if(currentCategory.contains("Drinks")){out.print("active text-light");}else{out.print("text-dark");}%>" 
+                            href="ShopServlet?category=Drinks">Drinks</a>
                         </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -47,7 +68,7 @@ Have each item displayed read from a item object file
             <div class="row h-100 w-75 ps-2 pe-2 mx-auto">
                 
                 <!-- products panel -->
-                <div class="container- fluid border d-inline-flex d-row justify-content-center pt-3" style="flex-wrap: wrap;">    
+                <div class="container- fluid border d-inline-flex d-row justify-content-start pt-3" style="flex-wrap: wrap;">    
                     
                     <!--  scriptlet which generates each product on the website -->
                     <%
@@ -84,11 +105,18 @@ Have each item displayed read from a item object file
                                 <hr>
 
                                 <!-- product price and order button -->
-                                <div class="container-fluid p-0">
+                                <div class="container-fluid p-0"  style="height:">
                                     <p class="fw-bold p-0 m-0 mb-3">PHP <%= productPrice %></p>
+                                    <% if(session.getAttribute("cart") == null){ %>
+                                    <a href="login.jsp">
+                                        <button class="btn btn-primary w-100">Order</button>
+                                    </a>
+                                    
+                                    <% } else{%>   
                                     <a href="ProductServlet?id=<%=productId%>">
                                         <button class="btn btn-primary w-100">Order</button>
                                     </a>
+                                    <% }%>
                                 </div>
                                                                                            
                             </div>     
