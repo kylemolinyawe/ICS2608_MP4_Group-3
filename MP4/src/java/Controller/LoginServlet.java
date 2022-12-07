@@ -2,6 +2,7 @@ package Controller;
 
 
 
+import Model.Product;
 import Model.User;
 import java.io.*;
 import java.util.*;
@@ -10,10 +11,12 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 /**
- * Login controller servlet which validates the user's credentials when trying to login.
- * And forwards them to the appropriate pages.
-* 
+ *  
  * @author Kyle Molinyawe
+ * forwards to shop.jsp
+ * Either the user logs in, a session is then created
+ * As for the guest view, a link in login.jsp directly goes to shop.jsp
+ * 
  */
 
 //to add: redirect to an error page when a logged in user tries to go to the login page.
@@ -40,7 +43,7 @@ public class LoginServlet extends HttpServlet {
             // create a session whose name is the username of the customer
             HttpSession session = request.getSession();
             session.setAttribute("name", username);
-            
+                                   
             rd.forward(request, response);
         }    
         

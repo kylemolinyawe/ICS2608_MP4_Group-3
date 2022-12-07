@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
+import java.util.TreeSet;
 import javax.servlet.ServletContext;
 
 public class Product {
@@ -27,6 +28,7 @@ public class Product {
         this.imgURL = imgURL;
         this.description = description;
         this.category = category;
+        this.quantity = 1;
     }
 
     // setters and
@@ -155,8 +157,20 @@ public class Product {
         return false;
     }
     
-    public void totalPrice(){
+    public void updateTotalPrice(){
         this.price = this.quantity * this.basePrice;
+    }
+    
+    public void incrementQuantity(){
+        this.quantity++;
+    }
+    
+    public void decrementQuantity(){
+        this.quantity--;
+    }
+    
+    public boolean isQuantityZero(){
+        return this.quantity == 0;
     }
     
 }
