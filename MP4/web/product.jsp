@@ -96,7 +96,7 @@ Has ‘Qty.’ buttons and an ‘Add to Cart’ button
                         <!-- hidden form field for submit button -->
                         <form action="CartServlet" method="post" class="mb-4">
                             <input type="hidden" name="id" value="<%=productId%>">
-                            <input type="hidden" id="quantity" name="quantity" value=""<%=productQuantity%>">
+                            <input type="hidden" name="quantity" value="<%=productQuantity%>">
                             <input type="submit" class="btn btn-primary w-100" value="Add to Cart">
                         </form>
                             

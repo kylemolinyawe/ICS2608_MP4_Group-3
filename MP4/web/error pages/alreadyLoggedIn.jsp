@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8" errorPage="true"%>
 <!DOCTYPE html>
-<html>
+<html style="height:100%">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Already Logged In!</title>
