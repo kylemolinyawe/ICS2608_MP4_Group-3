@@ -183,6 +183,10 @@
                         
                 </div>                 
             </div>
+                <=<!-- Replace this with a finalized version  -->
+                <form action='CartServlet'>
+                      <input type='hidden' name='submit' value='ok'>
+                      <input type='submit' class='btn btn-primary w-100' value='Checkout'></form>
         </div>        
     </body>
 </html>

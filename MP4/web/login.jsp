@@ -16,7 +16,8 @@ Display incorrect credentials when login fails
     <body>
         <div class="frame">
             <h3>Log In</h3>
-            <form method="POST" action="LoginServlet">              
+            <form method="POST" action="<% String param=request.getParameter("id");
+            if (param!=null && Integer.parseInt(param)>0 && Integer.parseInt(param)<16) {%>LoginServlet?id=<%=param%> <% }else{ %>LoginServlet<%}%>">              
                 <input type ="text" name="username" id="username" placeholder="USERNAME" required>
                 <input type ="text" name="password" id="password" placeholder="PASSWORD" required>
                 <input type="submit" value="LOG IN">

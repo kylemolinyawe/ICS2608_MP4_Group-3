@@ -115,6 +115,7 @@ public class CartServlet extends HttpServlet {
                  
                     break;
             }
+          
             
         }
 
@@ -169,6 +170,7 @@ public class CartServlet extends HttpServlet {
             session.setAttribute("cart", cart);
         }
             
+
     }
         
     
@@ -183,7 +185,22 @@ public class CartServlet extends HttpServlet {
         {
             TotalPrice += p.getPrice();
         }
+        System.out.println("you reached here 1");
+        request.setAttribute("Total", TotalPrice);
+        System.out.println("here 2");
+        RequestDispatcher rd = request.getRequestDispatcher("checkout.jsp");
+        rd.forward(request, response);
         
+    }
+    
+    protected boolean verif(HttpServletRequest request) throws ServletException,IOException
+    {
+        HttpSession session = request.getSession();
+        String uname = (String)session.getAttribute("name");
+        if(uname!=null)
+            return true;
+        else
+            return false;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -191,6 +208,14 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if(!(verif(request)))
+        {
+            //To do: redirect to an error page showing "You need to be logged in to access the cart."
+            String param = request.getParameter("id");
+            response.sendRedirect("login.jsp?id="+param);
+            return;
+        }
+        else
         processRequest(request, response);
     }
 
@@ -198,6 +223,14 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         if(!(verif(request)))
+        {
+            //To do: redirect to an error page showing "You need to be logged in to access the cart."
+            String param = request.getParameter("id");
+            response.sendRedirect("login.jsp?id="+param);
+            return;
+        }
+         else
         processRequest(request, response);
     }
 

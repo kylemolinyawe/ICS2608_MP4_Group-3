@@ -1,3 +1,5 @@
+<%@page import="Model.Product"%>
+<%@page import="java.util.ArrayList"%>
 <!--
 n
 -->
@@ -21,10 +23,23 @@ n
                 else{        
             %>             
                     <li class=nav-item>
+                        <%
+                            if(session.getAttribute("name")==null)
+                            {
+                         %>
+                         <a class='nav-link link-light' href='login.jsp'>Login</a>
+                         <%       
+                            }
+                            else
+                            {
+                        %>
                         <a class="nav-link link-light" href="LogoutServlet">Logout</a>
+                        <%  } %>
                     </li>
                     <li class=nav-item>
+
                         <a class="nav-link link-light" href="cart.jsp">Cart</a>
+
                     </li>                  
             <%
                 }

@@ -43,7 +43,7 @@ public class ShopServlet extends HttpServlet {
         String category = request.getParameter("category");               
         List<Product> products = Product.readProductsFile(this.getServletContext());
         
-        if(category.matches("All")){
+        if(category.matches("All")||category==null){
             request.setAttribute("products", products);
             RequestDispatcher rd = request.getRequestDispatcher("shop.jsp");  
             rd.forward(request, response);
