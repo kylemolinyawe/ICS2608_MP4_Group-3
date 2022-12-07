@@ -11,10 +11,12 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 /**
- * Login controller servlet which validates the user's credentials when trying to login.
- * And forwards them to the appropriate pages.
-* 
+ *  
  * @author Kyle Molinyawe
+ * forwards to shop.jsp
+ * Either the user logs in, a session is then created
+ * As for the guest view, a link in login.jsp directly goes to shop.jsp
+ * 
  */
 public class LoginServlet extends HttpServlet {
 

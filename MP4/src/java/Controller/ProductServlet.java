@@ -14,7 +14,9 @@ import javax.servlet.http.HttpSession;
 /**
  *
  * @author Kyle Molinyawe
- * servlet that forwards to cart.jsp
+ * Servlet that forwards to cart.jsp
+ * Uses a session attribute to keep track of the quantity of the product in the product.jsp
+ * Used as a case for adding a duplicate item with quantity > 1 to the cart.
  * 
  */
 public class ProductServlet extends HttpServlet {
@@ -26,7 +28,7 @@ public class ProductServlet extends HttpServlet {
         HttpSession session = request.getSession();      
         RequestDispatcher rd = request.getRequestDispatcher("product.jsp");
         
-        // session attribute for keeping track of 
+        // session attribute for keeping track of the quantity of the product in the product.jsp
         Product product = (Product)session.getAttribute("product");
         
         // case for quantity selector operations

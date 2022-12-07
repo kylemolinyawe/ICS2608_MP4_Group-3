@@ -14,8 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * 
  * @author Kyle Molinyawe
+ * Servlet that handles requests from product.jsp and from itself
+ * Such as decrementing, incrementing product quantity.
+ * And removing the product from the cart.
+ * 
  */
 public class CartServlet extends HttpServlet {
 
@@ -34,7 +38,7 @@ public class CartServlet extends HttpServlet {
             rd.forward(request, response);
         }
         
-        // case for removing a product, incrementing decrementing quantity, from the cart page
+        // case for removing a product, incrementing decrementing quantity, from cart.jsp
         else{
             int productId = Integer.parseInt(request.getParameter("id"));  
             ArrayList<Product> cart = (ArrayList<Product>)session.getAttribute("cart");
@@ -171,7 +175,7 @@ public class CartServlet extends HttpServlet {
     protected void buy(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException 
     {
-        //To add: check out cart and display results in a separate jsp file
+       
         Double TotalPrice = 0.0;
         HttpSession session = request.getSession();
         List<Product> productList = (ArrayList<Product>)session.getAttribute("cart");

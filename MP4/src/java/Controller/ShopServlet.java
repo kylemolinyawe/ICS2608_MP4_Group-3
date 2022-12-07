@@ -16,6 +16,14 @@ import javax.servlet.http.HttpSession;
 /**
  * 
  * @author Kyle Molinyawe
+ * Handles request from LoginServlet.java and from itself.
+ * Generates product panels based on the values found in files/products.csv
+ * As well as including categories that render only products with the matching category.
+ * 
+ * Differentiates user and guest from doPost and doGet methods respectively.
+ * A successful login from login.jsp uses a form with action post and creates a session cart
+ * Access from a guest goes through doGet
+ * 
  */
 
 public class ShopServlet extends HttpServlet {
@@ -32,8 +40,7 @@ public class ShopServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String category = request.getParameter("category");
-               
+        String category = request.getParameter("category");               
         List<Product> products = Product.readProductsFile(this.getServletContext());
         
         if(category.matches("All")){
